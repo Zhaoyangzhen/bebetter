@@ -1,0 +1,41 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1.12.2
+    container_name: nocilantro_nginx
+    ports:
+      - "1024:80"
+    volumes:
+      - ./nginx/config:/etc/nginx/conf.d
+      - ./nginx/logs:/etc/nginx/logs/
+      - ../app:/www/html/app
+  php:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    container_name: nocilantro_php
+    ports:
+      - "1025:9000"
+    volumes:
+      - ../app:/www/html/app
+  mysql:
+    image: mysql:5.7
+    container_name: nocilantro_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "nocilantro"
+      MYSQL_USER: "nocilantro"
+      MYSQL_PASSWORD: "lovesongzier"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    ports:
+      - "1026:3306"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: nocilantro_phpmyadmin
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_USER: "nocilantro"
+      MYSQL_PASSWORD: "nocilantro"
+    ports:
+      - "1027:80"
