@@ -2,14 +2,14 @@
 
 ssh root@${MYSERVER} >/dev/null 2>&1 << remotessh
     cd /
-    rm -rf songzier
+    rm -rf bebetter
     exit
 remotessh
 
-scp -r ~/songzier root@${MYSERVER}:/
+scp -r ~/bebetter root@${MYSERVER}:/
 
 ssh root@${MYSERVER} >/dev/null 2>&1 << remotessh
-    cd /songzier
+    cd /bebetter
     rm -rf .git
     exit
 remotessh
